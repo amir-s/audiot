@@ -1,0 +1,43 @@
+{
+  "name": "audiot",
+  "version": "0.0.2",
+  "description": "compile audio files into a single file",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "mp3",
+    "audio",
+    "merge",
+    "render",
+    "audiot",
+    "ffmpeg"
+  ],
+  "author": "Amir Saboury",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amir-s/audiot.git"
+  },
+  "readme": "README.md",
+  "homepage": "https://github.com/amir-s/audiot#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "prettier": "^3.4.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^5.7.3"
+  }
+}
