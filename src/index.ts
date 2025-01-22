@@ -9,7 +9,7 @@ export interface Section {
 export type Timeline = Section[];
 
 export const compile = async (timeline: Timeline, output: string) => {
-  let command = 'ffmpeg ';
+  let command = 'ffmpeg -y ';
   let filters = '';
 
   timeline.forEach((section, index) => {
