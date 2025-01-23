@@ -1,6 +1,6 @@
 {
   "name": "audiot",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "compile audio files into a single file",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

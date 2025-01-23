@@ -8,17 +8,26 @@ export interface Section {
 
 export type Timeline = Section[];
 
-export const compile = async (timeline: Timeline, output: string) => {
-  let command = 'ffmpeg -y ';
+export const compile = async (
+  timeline: Timeline,
+  output: string,
+  { ffmpegPath = 'ffmpeg', overwrite = true, normalizeVolume = false } = {},
+) => {
+  let command = `${ffmpegPath} ${overwrite ? '-y' : ''} `;
   let filters = '';
 
   timeline.forEach((section, index) => {
     const input = `-i "${section.file}"`;
+    command += input + ' ';
+
     const atempo = `atempo=${section.speed || 1}`;
     const asetpts = `asetpts=PTS-STARTPTS`;
     const adelay = `adelay=${section.start || 0}ms`;
-    const filter = `[${index}:a]${atempo},${asetpts},${adelay}[a${index}];`;
-    command += input + ' ';
+
+    // Integrated loudness target (I), loudness range target (LRA), true peak (TP)
+    const loudnorm = normalizeVolume ? `loudnorm=I=-23:LRA=7:TP=-2` : '';
+
+    const filter = `[${index}:a]${[atempo, asetpts, adelay, loudnorm].filter((i) => i).join(',')}[a${index}];`;
     filters += filter + ' ';
   });
   filters += `${timeline
